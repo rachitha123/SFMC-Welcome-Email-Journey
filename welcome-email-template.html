@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>Welcome to MediConnect</title>
+  <!--
+    ============================================================
+    SFMC WELCOME EMAIL TEMPLATE – Email 1 of 2
+    Journey: MediConnect Welcome Journey
+    Platform: Salesforce Marketing Cloud
+    Notes:
+      - AMPscript blocks are marked with comments below
+      - Dynamic content block switches based on Preference field
+      - Tested for Gmail, Outlook, Apple Mail rendering
+    ============================================================
+  -->
+  <style>
+    body { margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif; }
+    table { border-collapse: collapse; }
+    img { border: 0; display: block; }
+    .email-wrapper { background-color: #f4f4f4; padding: 24px 0; }
+    .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; }
+    .header { background-color: #0057A8; padding: 32px 40px; text-align: center; }
+    .header h1 { color: #ffffff; font-size: 22px; margin: 0; font-weight: 600; letter-spacing: 0.5px; }
+    .body-content { padding: 36px 40px; }
+    .greeting { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px; }
+    .body-text { font-size: 15px; color: #444444; line-height: 1.7; margin: 0 0 20px; }
+    .cta-section { text-align: center; margin: 28px 0; }
+    .cta-button { display: inline-block; background-color: #0057A8; color: #ffffff !important; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 15px; font-weight: 600; }
+    .divider { border: none; border-top: 1px solid #e8e8e8; margin: 28px 0; }
+    .dynamic-block { background-color: #f0f6ff; border-left: 4px solid #0057A8; padding: 16px 20px; border-radius: 0 6px 6px 0; margin-bottom: 24px; }
+    .dynamic-block h3 { font-size: 15px; color: #0057A8; margin: 0 0 8px; }
+    .dynamic-block p { font-size: 14px; color: #444444; margin: 0; line-height: 1.6; }
+    .feature-row { display: flex; gap: 12px; margin-bottom: 16px; }
+    .feature-icon { font-size: 20px; min-width: 28px; }
+    .feature-text { font-size: 14px; color: #444444; line-height: 1.6; }
+    .footer { background-color: #f8f8f8; padding: 24px 40px; text-align: center; border-top: 1px solid #e8e8e8; }
+    .footer p { font-size: 12px; color: #888888; margin: 0 0 6px; line-height: 1.6; }
+    .footer a { color: #0057A8; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!--
+  ============================================================
+  AMPSCRIPT BLOCK – Retrieve subscriber attributes
+  This block runs before the email renders and pulls subscriber
+  data from the MediConnect_Subscribers Data Extension
+  ============================================================
+-->
+%%[
+  VAR @firstName, @preference
+  SET @firstName = AttributeValue("FirstName")
+  SET @preference = AttributeValue("Preference")
+]%%
+
+<div class="email-wrapper">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td align="center">
+        <div class="email-container">
+
+          <!-- ====== HEADER ====== -->
+          <div class="header">
+            <h1>MediConnect</h1>
+          </div>
+
+          <!-- ====== BODY ====== -->
+          <div class="body-content">
+
+            <!--
+              AMPSCRIPT – Personalised greeting using FirstName
+              %%=v(@firstName)=%% outputs the subscriber's first name
+            -->
+            <p class="greeting">Welcome, %%=v(@firstName)=%%! 👋</p>
+
+            <p class="body-text">
+              Thank you for joining MediConnect. We're excited to have you on board.
+              Your account is ready and you can start exploring everything the platform has to offer.
+            </p>
+
+            <!--
+              ============================================================
+              AMPSCRIPT – Dynamic content block
+              Shows different content based on the Preference field value
+              "Specialist" subscribers see clinical tools messaging
+              All others see the general platform overview
+              ============================================================
+            -->
+            %%[ IF @preference == "Specialist" THEN ]%%
+
+            <div class="dynamic-block">
+              <h3>Your specialist toolkit is ready</h3>
+              <p>As a healthcare specialist, you have access to clinical reference tools, peer-reviewed resources, and specialist discussion forums — all in one place.</p>
+            </div>
+
+            %%[ ELSE ]%%
+
+            <div class="dynamic-block">
+              <h3>Everything you need, in one place</h3>
+              <p>MediConnect brings together health resources, appointment management, and wellness tools to help you stay informed and in control of your health journey.</p>
+            </div>
+
+            %%[ ENDIF ]%%
+
+            <hr class="divider" />
+
+            <!-- FEATURE HIGHLIGHTS -->
+            <p class="body-text" style="font-weight:600; color:#1a1a1a; margin-bottom: 16px;">Here's what you can do next:</p>
+
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td style="padding: 0 0 14px;">
+                  <table cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="font-size:20px; padding-right:12px; vertical-align:top;">✅</td>
+                      <td style="font-size:14px; color:#444; line-height:1.6; vertical-align:top;"><strong>Complete your profile</strong> — Add your details so we can personalise your experience</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 0 0 14px;">
+                  <table cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="font-size:20px; padding-right:12px; vertical-align:top;">📋</td>
+                      <td style="font-size:14px; color:#444; line-height:1.6; vertical-align:top;"><strong>Browse our health resources</strong> — Thousands of articles and guides, reviewed by experts</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 0 0 14px;">
+                  <table cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td style="font-size:20px; padding-right:12px; vertical-align:top;">📅</td>
+                      <td style="font-size:14px; color:#444; line-height:1.6; vertical-align:top;"><strong>Book your first appointment</strong> — Connect with a healthcare professional in minutes</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- CTA BUTTON -->
+            <div class="cta-section">
+              <a href="https://www.mediconnect.com/complete-profile" class="cta-button">
+                Complete Your Profile
+              </a>
+            </div>
+
+            <p class="body-text" style="font-size:14px; color:#888888; margin-top:0;">
+              Any questions? Reply to this email or visit our
+              <a href="https://www.mediconnect.com/help" style="color:#0057A8;">Help Centre</a>.
+            </p>
+
+          </div>
+          <!-- ====== END BODY ====== -->
+
+          <!-- ====== FOOTER ====== -->
+          <div class="footer">
+            <p>You received this email because you signed up to MediConnect.</p>
+            <p>
+              <a href="%%profile_center_url%%">Update preferences</a> &nbsp;|&nbsp;
+              <a href="%%unsub_center_url%%">Unsubscribe</a>
+            </p>
+            <p style="margin-top:10px;">MediConnect Pvt. Ltd. · Bangalore, India</p>
+            <!--
+              NOTE: %%profile_center_url%% and %%unsub_center_url%% are
+              built-in SFMC substitution strings. They automatically generate
+              the correct preference centre and unsubscribe links.
+              These are REQUIRED in all SFMC emails for CAN-SPAM compliance.
+            -->
+          </div>
+          <!-- ====== END FOOTER ====== -->
+
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
